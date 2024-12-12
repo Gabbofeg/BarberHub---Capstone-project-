@@ -1,0 +1,18 @@
+.carousel-container{
+    gap: 2rem;
+    margin: 2rem 2rem ;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.carousel-container h2 {
+    text-align: center;
+    padding: 1rem 0;
+}
+
+.slider-carousel{
+    width: 100%;
+    height: max-content;
+    display: flex;
+    justify-content: center;
+}

@@ -1,0 +1,18 @@
+.form-container {
+  margin-top: 5rem;
+  border: 1px solid white;
+  border-radius: 20px;
+  background-color: white;
+  width: 26rem;
+  height: 26rem;
+  align-content: center;
+}
+
+.save-btn {
+  width: 5rem;
+  height: 2rem;
+  border: 1px solid black;
+  border-radius: 10px;
+  z-index: 9999;
+  position: relative;
+}

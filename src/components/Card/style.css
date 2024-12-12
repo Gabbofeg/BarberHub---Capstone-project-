@@ -1,0 +1,64 @@
+.customCard{
+    width: 18rem;
+    border-radius: 10px;
+    background-color: #eeeee4;
+    flex-direction: column;
+    margin-bottom: 4rem;
+    background-color: rgb(247, 247, 247);
+    height: 100%;
+}
+
+.cardTitle{
+    font-weight: 900;
+    flex-grow: 1;
+}
+
+.cardBody{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 0 2rem 0 2rem;
+    height: 100%;
+    justify-content: space-around;
+    text-align: center;
+}
+
+.shopButton{
+    width: 8rem;
+    height: 3rem;
+    border-radius: 20px;
+    background-color: #abdbe3;
+    border: none;
+    margin-bottom: 1rem;
+}
+
+.cardImage{
+    width: 100%;
+    height: 180px;
+    border-radius: 10px 10px 0 0 ;
+}
+
+.cardTitle{
+    padding-top: 1rem;
+}
+
+.cardDescription{
+    margin: 0;
+    font-size: 13px;
+    overflow: hidden;
+    height: 100px;
+}
+
+.shopButton:hover{
+    background-color: red;
+    transition: 0.20s linear ;
+}
+
+@media (max-width: 768px) {
+    .customCard{
+        margin-bottom: 1rem;
+    }
+}
+
+
+

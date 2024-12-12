@@ -1,0 +1,167 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton+SC&family=Oswald:wght@200..700&family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Anton+SC&family=Oswald:wght@200..700&family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+:root{
+  --text-hover: #DC3545;
+}
+
+.imgContainer{
+  transition: transform .2s;
+}
+
+.logoImg {
+  border-radius: 12px;
+  max-height: 100px;
+  height: 90px;
+  align-items: center;
+}
+
+
+.navigationBar {
+  display: flex;
+  position: sticky;
+  z-index: 1000;
+  top: 0;
+  padding: 5rem 0;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1a1a1a;
+  padding: 15px 30px;
+  max-height: 120px;
+}
+
+.leftNav{
+  gap: 3rem;
+}
+
+.instaLink{
+  font-size: xx-large;
+  text-decoration: none;
+  color: white;
+  font-family: "Anton SC", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.instaBanner{
+  padding-left: 2rem;
+  border-left: 2px solid white;
+  align-content: center;
+}
+
+.instaBanner:hover{
+  border-left: 2px solid var(--text-hover);
+  transition: 0.2s linear;
+}
+
+.instaLink:hover{
+  color: var(--text-hover);
+  transition: 0.2s linear;
+}
+
+.navLinks {
+  align-content: center;
+  font-family: "Anton", sans-serif;
+}
+
+.iconContainer {
+  justify-content: center;
+  align-items: center;
+}
+
+
+.path {
+  color: white;
+  text-decoration: none;
+}
+
+.navbar-links {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  align-items: center;
+  margin-bottom: 0;
+  padding-left: 0;
+}
+
+.navbar-links.open {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  background-color: #2a2a2a;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.navbar-links li {
+  margin: 10px 0;
+}
+
+.navbar-links li a {
+  text-decoration: none;
+  color: white;
+  font-size: 1.1em;
+  transition: color 0.3s ease;
+}
+
+.navbar-links li a:hover {
+  color: var(--text-hover);
+}
+
+.navbar-toggle {
+  display: none;
+}
+
+.toggle-button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.8em;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.toggle-button:hover {
+  transform: rotate(90deg);
+}
+
+@media (max-width: 825px) {
+  .navbar-links {
+    display: none;
+    flex-direction: column;
+  }
+
+  .navbar-links.open {
+    display: flex;
+    margin-top: 25px;
+  }
+
+  .instaBanner{
+    padding-left: 1rem;
+  }
+
+  .leftNav{
+    gap: 1rem;
+  }
+  
+  .instaLink:hover{
+    border: var(--text-hover);
+    color: var(--text-hover);
+    transition: 0.2s linear;
+  }
+
+  .navbar-toggle {
+    display: block;
+  }
+
+  .logoImg{
+    margin: 0;
+    padding: 0;
+  }
+}

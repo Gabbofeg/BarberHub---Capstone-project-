@@ -1,0 +1,17 @@
+.service-container{
+    display: flex;
+    justify-content: center;
+    padding: 2rem 2rem 0 2rem;
+    gap: 3rem;
+}
+
+.text-container{
+    align-items: center;
+    width: 70%;
+}
+
+#serviceImg{
+    width: 30%;
+    max-height: 30rem;
+    border-radius: 20px;
+}

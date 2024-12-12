@@ -1,0 +1,16 @@
+.cardContainer {
+    justify-content: center;
+}
+
+.product-container h2{
+    text-align: center;
+    padding: 2rem 0 1rem 0;
+}
+
+@media (max-width: 768px){
+    .cardContainer{
+        display: flex;
+        justify-content: center;
+
+    }
+}
