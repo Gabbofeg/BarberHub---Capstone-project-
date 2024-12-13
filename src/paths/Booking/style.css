@@ -1,0 +1,13 @@
+.booking-container h2 a{
+    display: flex;
+    text-decoration: none;
+    color: #212529;
+    align-content: center;
+    justify-content: center;
+    margin-top: 3rem;
+}
+
+.booking-container h2 a:hover{
+    color: white;
+    transition: 0.2s;
+}

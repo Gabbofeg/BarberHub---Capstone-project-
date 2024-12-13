@@ -1,16 +1,37 @@
 .cardContainer {
+  justify-content: center;
+}
+
+.product-container h2 {
+  text-align: center;
+  padding: 2rem 0 1rem 0;
+}
+
+.pagination{
+    display: flex;
     justify-content: center;
+    margin-top: 1rem;
 }
 
-.product-container h2{
-    text-align: center;
-    padding: 2rem 0 1rem 0;
+.pagination button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 10px;
+  border: none;
+}
+.pagination button.active {
+  background-color: red;
+  color: white;
+}
+.pagination button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
 }
 
-@media (max-width: 768px){
-    .cardContainer{
-        display: flex;
-        justify-content: center;
-
-    }
+@media (max-width: 768px) {
+  .cardContainer {
+    display: flex;
+    justify-content: center;
+  }
 }

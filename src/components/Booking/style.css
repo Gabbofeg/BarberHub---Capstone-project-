@@ -5,6 +5,10 @@
     gap: 1rem;
 }
 
+.booking-creator h1 {
+    margin-top: 2rem;
+}
+
 .time-btn{
     border-radius: 20px;
     border: none;
