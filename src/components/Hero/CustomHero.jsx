@@ -1,6 +1,8 @@
 import "../Hero/style.css";
 
+
 const CustomHero = ({ tagLine, title, message, btnText }) => {
+
   return (
     <div className="heroContainer text-center">
       <div className="container pt-5 pb-5">

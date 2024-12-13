@@ -1,74 +1,121 @@
 import React, { useState, useEffect } from "react";
-import "../Booking/style.css";
+import Calendar from "react-calendar"; // Usa la libreria react-calendar
+import "react-calendar/dist/Calendar.css";
 import axios from "axios";
+import "./style.css";
 
-const BookingSystem = () => {
-  const [availability, setAvailability] = useState({});
+const BookingCreator = () => {
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [availableTimes, setAvailableTimes] = useState([]);
+  const [allDates, setAllDates] = useState([]);
+  const [slotsAvaliable, setSlotsAvaliable] = useState(2);
+  const [timeslots, setTimeSlots] = useState([
+    "08:00",
+    "08:30",
+    "09:00",
+    "09:30",
+    "10:00",
+    "10:30",
+    "11:00",
+    "11:30",
+    "12:00",
+    "12:30",
+    "13:00",
+    "13:30",
+    "14:00",
+    "14:30",
+    "15:00",
+    "15:30",
+    "16:00",
+    "16:30",
+    "17:00",
+    "17:30",
+    "18:00",
+    "18:30",
+    "19:00",
+    "19:30",
+    "20:00",
+  ]);
 
   useEffect(() => {
     axios
       .get("http://localhost:4040/availability")
       .then((response) => {
-        console.log("Dati ricevuti:", response.data);
-        const data = response.data.reduce((acc, item) => {
-          acc[item.date] = item.timeslots;
-          return acc;
-        }, {});
-        setAvailability(data);
-        console.log("Stato aggiornato:", data);
+        const dates = response.data.map((item) => item.date);
+        setAllDates(dates);
       })
-      .catch((err) => console.error("Errore nel caricamento:", err));
+      .catch((err) => console.error("Errore nel caricamento delle date:", err));
   }, []);
 
-  const handleBooking = (day, time) => {
+  useEffect(() => {
+    if (selectedDate) {
+      axios
+        .get(`http://localhost:4040/availability/${selectedDate}`)
+        .then((response) => {
+          const availableTimes = new Set(
+            response.data.map((element) => element.time)
+          );
+          setTimeSlots(timeslots.filter((time) => !availableTimes.has(time)));
+        })
+        .catch((err) =>
+          console.error("Errore nel caricamento degli orari:", err)
+        );
+    }
+  }, [selectedDate]);
+
+  const handleBooking = (time) => {
+    console.log("Selezionato:", selectedDate, time); 
     axios
-      .post("http://localhost:4040/availability/book", { date: day, time })
+      .post("http://localhost:4040/availability/book", {
+        date: selectedDate,
+        time: time,
+      })
       .then(() => {
-        setAvailability((prev) => ({
+        alert("Prenotazione effettuata con successo!");
+        setAvailableTimes((prev) => ({
           ...prev,
-          [day]: {
-            ...prev[day],
-            [time]: prev[day][time] - 1,
-          },
+          [time]: prev[time] - 1,
         }));
       })
       .catch((err) => console.error("Errore nella prenotazione:", err));
   };
 
-  const getButtonColor = (day, time) => {
-    const slots = availability[day]?.[time];
-    if (slots === 0) return "red";
-    if (slots <= 2) return "yellow";
-    return "green";
+  const isDateAvailable = (date) => {
+    const formattedDate = date.toISOString().split("T")[0];
+    return allDates.includes(formattedDate);
   };
 
   return (
-    <div className="booking-container">
-      <h1>Booking System</h1>
-      {Object.keys(availability).length > 0 ? (
-        Object.keys(availability).map((day) => (
-          <div key={day} className="day-section">
-            <h2>{day}</h2>
-            <div className="time-slots">
-              {Object.keys(availability[day] || {}).map((time) => (
+    <div className="booking-creator">
+      <h1>Crea una Prenotazione</h1>
+      <Calendar
+        onChange={(date) => setSelectedDate(date.toISOString().split("T")[0])}
+        tileClassName={({ date }) =>
+          isDateAvailable(date) ? "available-date" : "unavailable-date"
+        }
+      />
+      {selectedDate && (
+        <div className="booking-time-container">
+          <h2>Orari disponibili per {selectedDate}:</h2>
+          <div className="time-container">
+            {timeslots.length > 0 ? (
+              timeslots.map((time) => (
                 <button
                   key={time}
-                  style={{ backgroundColor: getButtonColor(day, time) }}
-                  className="time-slot"
-                  onClick={() => handleBooking(day, time)}
-                  disabled={availability[day][time] === 0}
+                  onClick={() => handleBooking(time)}
+                  className="time-btn"
                 >
-                  {time} ({availability[day][time]} posti)
+                  {time}
                 </button>
-              ))}
-            </div>
+              ))
+            ) : (
+              <p>Nessun orario disponibile per questa data.</p>
+            )}
           </div>
-        ))
-      ) : (
-        <p>Nessuna disponibilità trovata.</p>
+        </div>
       )}
     </div>
   );
 };
 
-export default BookingSystem;
+export default BookingCreator;

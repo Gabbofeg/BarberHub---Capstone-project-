@@ -1,0 +1,18 @@
+.booking-creator{
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.time-btn{
+    border-radius: 20px;
+    border: none;
+    width: 5rem;
+}
+
+.time-container{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}

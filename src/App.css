@@ -7,7 +7,10 @@
     font-family: 'Oswald', sans-serif;
    }
 body, html{
-    height: 100%;
     background-color: grey;
+}
+
+main{
+    padding: 0 0 2rem 0;
 }
 

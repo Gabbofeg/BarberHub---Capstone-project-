@@ -1,0 +1,52 @@
+.login-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap:2rem;
+    margin-bottom: 4rem;
+}
+
+.login-option{
+    gap: 1rem;
+    display: flex;
+}
+
+.credential-form{
+    gap: 3rem;
+    display: flex;
+}
+
+.googleBtn{
+    border-radius: 10px;
+    border: none;
+    width: 5rem;
+}
+
+.githubBtn{
+    border-radius: 10px;
+    width: 5rem;
+    border: none;
+}
+
+.loginBtn{
+    border-radius: 10px;
+    width: 5rem;
+    height: 2rem;
+    border: none;
+}
+
+.form-input{
+    border: none;
+    border-radius: 20px;
+}
+
+.googleBtn:hover{
+    background-color: yellow;
+    transition: 0.3s;
+}
+
+.githubBtn:hover{
+    background-color: black;
+    transition: 0.3s;
+    color: white; 
+}
