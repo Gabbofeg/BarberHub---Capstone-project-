@@ -11,7 +11,7 @@ const validateUserBody = [
         .isLength({ min: 8 })
         .withMessage('Attenzione, la password deve avere almeno 8 caratteri'),
 
-    body('userName')
+    body('fullName')
         .notEmpty()
         .isString()
         .isLength({ min: 1 })
