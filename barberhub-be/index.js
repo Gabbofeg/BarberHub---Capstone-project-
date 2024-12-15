@@ -16,6 +16,8 @@ const server = express()
 const usersRoute = require('./routes/users')
 const productsRoute = require('./routes/products')
 const availabilityRoute = require('./routes/availability')
+const servicesRoute = require('./routes/service')
+const ratingsRoute = require('./routes/ratings')
 
 server.use(express.json())
 server.use(cors());
@@ -24,6 +26,8 @@ server.use(passport.initialize());
 server.use('/', usersRoute),
 server.use('/Prodotti', productsRoute),
 server.use('/availability', availabilityRoute),
+server.use('/services', servicesRoute),
+server.use('/ratings', ratingsRoute)
 
 mongoose.connect(process.env.MONGODB_URI)
 const db = mongoose.connection

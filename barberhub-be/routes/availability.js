@@ -2,7 +2,7 @@ const express = require("express");
 const Availability = require("../models/availabilityModel");
 const availability = express.Router();
 
-// Recupera tutte le date disponibili
+
 availability.get("/", async (req, res) => {
   try {
     const availability = await Availability.find();
@@ -12,7 +12,7 @@ availability.get("/", async (req, res) => {
   }
 });
 
-// Recupera gli orari disponibili per una data specifica
+
 availability.get("/:date", async (req, res) => {
   const { date } = req.params;
   try {
@@ -31,14 +31,14 @@ availability.post("/book", async (req, res) => {
   }
 
   try {
-    const availability = await Availability.findOne({ date });
-    if (!availability || !availability.timeslots[time] || availability.timeslots[time] <= 0) {
+    const result = await Availability.updateOne(
+      { date, [`time.${time}`]: { $gt: 0 } },
+      { $inc: { [`time.${time}`]: -1 } }
+    );
+
+    if (result.modifiedCount === 0) {
       return res.status(400).send("Orario non disponibile");
     }
-
-    // Decrementa lo slot disponibile
-    availability.timeslots[time] -= 1;
-    await availability.save();
 
     res.status(200).json({ message: "Prenotazione effettuata" });
   } catch (err) {
