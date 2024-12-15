@@ -1,0 +1,18 @@
+.rating-container{
+    display: flex;
+    flex-direction: column;
+    padding-top: 2rem;
+    width: 50%;
+}
+
+.comment-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    text-align: start;
+    padding-top: 1rem;
+}
+
+.rating-container h1 {
+    text-align: center;
+}

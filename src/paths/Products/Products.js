@@ -75,7 +75,7 @@ export const ProductList = () => {
 
   if (loading) return <div>Caricamento...</div>;
   if (error) return <div>Errore: {error} </div>;
-  console.log(products);
+  
   return (
     <div>
       <div className="container product-container">

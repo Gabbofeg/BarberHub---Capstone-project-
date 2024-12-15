@@ -61,7 +61,7 @@ const BookingCreator = () => {
   }, [selectedDate]);
 
   const handleBooking = (time) => {
-    console.log("Selezionato:", selectedDate, time); 
+    console.log("Selezionato:", selectedDate, time);
     axios
       .post("http://localhost:4040/availability/book", {
         date: selectedDate,
@@ -73,6 +73,7 @@ const BookingCreator = () => {
           ...prev,
           [time]: prev[time] - 1,
         }));
+        console.log("Payload inviato:", { date: selectedDate, time: time });
       })
       .catch((err) => console.error("Errore nella prenotazione:", err));
   };
@@ -83,34 +84,39 @@ const BookingCreator = () => {
   };
 
   return (
-    <div className="booking-creator">
+    <div className="booking-container">
       <h1>Crea una Prenotazione</h1>
-      <Calendar
-        onChange={(date) => setSelectedDate(date.toISOString().split("T")[0])}
-        tileClassName={({ date }) =>
-          isDateAvailable(date) ? "available-date" : "unavailable-date"
-        }
-      />
-      {selectedDate && (
-        <div className="booking-time-container">
-          <h2>Orari disponibili per {selectedDate}:</h2>
-          <div className="time-container">
-            {timeslots.length > 0 ? (
-              timeslots.map((time) => (
-                <button
-                  key={time}
-                  onClick={() => handleBooking(time)}
-                  className="time-btn"
-                >
-                  {time}
-                </button>
-              ))
-            ) : (
-              <p>Nessun orario disponibile per questa data.</p>
-            )}
+      <div className="booking-creator">
+        <Calendar
+          onChange={(date) => {
+            const formattedDate = date.toISOString().split("T")[0]; // aaaa-mm-gg
+            setSelectedDate(formattedDate);
+          }}
+          tileClassName={({ date }) =>
+            isDateAvailable(date) ? "available-date" : "unavailable-date"
+          }
+        />
+        {selectedDate && (
+          <div className="booking-time-container">
+            <h2>Orari disponibili per {selectedDate}:</h2>
+            <div className="time-container">
+              {timeslots.length > 0 ? (
+                timeslots.map((time) => (
+                  <button
+                    key={time}
+                    onClick={() => handleBooking(time)}
+                    className="time-btn"
+                  >
+                    {time}
+                  </button>
+                ))
+              ) : (
+                <p>Nessun orario disponibile per questa data.</p>
+              )}
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };
