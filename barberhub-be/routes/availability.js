@@ -31,17 +31,28 @@ availability.post("/book", async (req, res) => {
   }
 
   try {
-    const result = await Availability.updateOne(
-      { date, [`time.${time}`]: { $gt: 0 } },
-      { $inc: { [`time.${time}`]: -1 } }
-    );
+    const availability = await Availability.findOne({ date });
 
-    if (result.modifiedCount === 0) {
-      return res.status(400).send("Orario non disponibile");
+    if (availability && availability.time.includes(time)) {
+      return res.status(400).send("Orario già prenotato o non disponibile")
     }
 
-    res.status(200).json({ message: "Prenotazione effettuata" });
+    const result = await Availability.updateOne(
+      { date },
+      { $addToSet: { time: time } }
+    );
+
+    if (result.matchedCount === 0) {
+      await Availability.updateOne(
+        { date },
+        { $set: { time: [time] } },
+        {upsert: true}
+      )
+    }
+
+    res.status(200).json({ message: `Orario ${time} aggiunto con successo` });
   } catch (err) {
+    console.error("Errore nella prenotazione:", err);
     res.status(500).send("Errore nella prenotazione");
   }
 });

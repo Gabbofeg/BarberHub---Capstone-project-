@@ -5,7 +5,7 @@ const passport = require("passport");
 const User = require("../models/userModel");
 
 const router = express.Router();
-const SECRET = "supersecretkey"; // Usa dotenv per proteggerlo!
+const SECRET = "supersecretkey"; 
 
 // Login normale
 router.post("/login", async (req, res) => {

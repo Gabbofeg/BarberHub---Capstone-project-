@@ -1,9 +1,12 @@
 const mongoose = require("mongoose");
 
 const availabilitySchema = new mongoose.Schema({
-  date: { type: String, required: true },
+  date: { 
+    type: String, 
+    required: true 
+  },
   time: {
-    type: String,
+    type: [String],
     required: true,
   },
 });
