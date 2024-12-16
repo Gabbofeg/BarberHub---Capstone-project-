@@ -6,9 +6,6 @@ import "./style.css";
 
 const BookingCreator = () => {
   const [selectedDate, setSelectedDate] = useState(null);
-  const [availableTimes, setAvailableTimes] = useState([]);
-  const [allDates, setAllDates] = useState([]);
-  const [slotsAvaliable, setSlotsAvaliable] = useState(2);
   const [timeslots, setTimeSlots] = useState([
     "08:00",
     "08:30",
@@ -33,6 +30,9 @@ const BookingCreator = () => {
     "19:30",
     "20:00",
   ]);
+  const [allDates, setAllDates] = useState([]); // Per memorizzare tutte le date disponibili
+  const [bookedTimes, setBookedTimes] = useState(new Set()); // Orari prenotati per la data selezionata
+
 
   useEffect(() => {
     axios
@@ -52,6 +52,7 @@ const BookingCreator = () => {
           const availableTimes = new Set(
             response.data.map((element) => element.time)
           );
+          setBookedTimes(availableTimes);
           setTimeSlots(timeslots.filter((time) => !availableTimes.has(time)));
         })
         .catch((err) =>
@@ -69,10 +70,8 @@ const BookingCreator = () => {
       })
       .then(() => {
         alert("Prenotazione effettuata con successo!");
-        setAvailableTimes((prev) => ({
-          ...prev,
-          [time]: prev[time] - 1,
-        }));
+        setBookedTimes((prev) => new Set ([...prev, time]));
+        setTimeSlots((prev) => prev.filter((slot) => slot !== time))
         console.log("Payload inviato:", { date: selectedDate, time: time });
       })
       .catch((err) => console.error("Errore nella prenotazione:", err));
@@ -106,6 +105,7 @@ const BookingCreator = () => {
                     key={time}
                     onClick={() => handleBooking(time)}
                     className="time-btn"
+                    disabled={bookedTimes.has(time)}
                   >
                     {time}
                   </button>

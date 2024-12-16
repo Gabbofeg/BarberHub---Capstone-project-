@@ -13,7 +13,6 @@ const Navbar = () => {
   const handleToggle = () => {
     setIsOpen(!isOpen);
   };
-
  
 
   useEffect(() => {

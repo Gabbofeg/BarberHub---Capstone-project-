@@ -7,6 +7,7 @@ const RatingsDisplay = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -29,6 +30,20 @@ const RatingsDisplay = () => {
     fetchProducts();
   }, []);
 
+  const renderStars = (stars) => {
+    const fullStars = Math.floor(stars);
+    const halfStar = stars % 1 !== 0;
+    const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+
+    return (
+      <div className="stars">
+        {"★".repeat(fullStars)}
+        {halfStar && "☆"}
+        {"☆".repeat(emptyStars)}
+      </div>
+    );
+  };
+
   if (loading) return <div>Caricamento...</div>;
   if (error) return <div>Errore :{error}</div>;
 
@@ -40,6 +55,7 @@ const RatingsDisplay = () => {
             <div key={index} className="comment-container">
               <h6>{rating.author?.userName || "Anonimo"}</h6>
               <p>{rating.comment || "Nessun commento disponibile"}</p>
+              {renderStars(rating.stars || 0)}
             </div>
           ))
         ) : (
