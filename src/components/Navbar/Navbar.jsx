@@ -58,7 +58,9 @@ const Navbar = () => {
           onHoverStart={() => console.log("hover started!")}
           className="imgContainer"
         >
-          <img className="logoImg" src={logo} alt="logo" />
+          <Link to="http://localhost:3000/">
+            <img className="logoImg" src={logo} alt="logo" link='http://localhost:3000/Home'/>
+          </Link>
         </motion.div>
         <motion.div
           whileHover={{ scale: 1.02 }}

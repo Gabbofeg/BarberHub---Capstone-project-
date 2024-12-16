@@ -49,15 +49,6 @@
   align-content: center;
 }
 
-.instaBanner:hover{
-  border-left: 2px solid var(--text-hover);
-  transition: 0.2s linear;
-}
-
-.instaLink:hover{
-  color: var(--text-hover);
-  transition: 0.2s linear;
-}
 
 .navLinks {
   align-content: center;
@@ -143,17 +134,11 @@
   }
 
   .instaBanner{
-    padding-left: 1rem;
+    display: none;
   }
 
   .leftNav{
     gap: 1rem;
-  }
-  
-  .instaLink:hover{
-    border: var(--text-hover);
-    color: var(--text-hover);
-    transition: 0.2s linear;
   }
 
   .navbar-toggle {

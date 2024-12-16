@@ -1,4 +1,5 @@
 import "../Hero/style.css";
+import { Link } from "react-router-dom";
 
 
 const CustomHero = ({ tagLine, title, message, btnText }) => {
@@ -11,7 +12,9 @@ const CustomHero = ({ tagLine, title, message, btnText }) => {
             <span> {tagLine} </span>
             <h1 className="display-3 fw-bold mb-3"> {title} </h1>
             {message && <p className="lead mb-3 message"> {message} </p>}
-            <button className="bookBtn btn btn-danger text-black">{btnText}</button>
+            <Link to="http://localhost:3000/Prenota">
+              <button className="bookBtn btn btn-danger text-black">{btnText}</button>
+            </Link>
           </div>
         </div>
       </div>
