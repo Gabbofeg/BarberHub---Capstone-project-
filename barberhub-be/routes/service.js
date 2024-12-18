@@ -25,5 +25,26 @@ service.get("/", async (req, res) => {
   }
 });
 
+service.post('/create', async ( req, res ) => {
+  const newService = new serviceModel(req.body )
+  if (!newService) {
+    console.error("Dati mancanti:", req.body)
+    return res.status(400).send("Dati mancanti o non validi");
+  }
+  try {
+    const serviceToSave = await newService.save()
+    res.status(201).send({
+      statusCode: 201,
+      message: 'Il servizio è stato salvato correttamente',
+      serviceToSave
+    })
+  } catch (e) {
+    res.status(500).send({
+      statusCode: 500,
+      message: e.message
+    })
+  }
+})
+
 
 module.exports = service
