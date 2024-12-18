@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Calendar from "react-calendar"; // Usa la libreria react-calendar
+import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import axios from "axios";
 import "./style.css";
@@ -30,9 +30,8 @@ const BookingCreator = () => {
     "19:30",
     "20:00",
   ]);
-  const [allDates, setAllDates] = useState([]); // Per memorizzare tutte le date disponibili
-  const [bookedTimes, setBookedTimes] = useState(new Set()); // Orari prenotati per la data selezionata
-
+  const [allDates, setAllDates] = useState([]);
+  const [bookedTimes, setBookedTimes] = useState(new Set());
 
   useEffect(() => {
     axios
@@ -49,11 +48,18 @@ const BookingCreator = () => {
       axios
         .get(`http://localhost:4040/availability/${selectedDate}`)
         .then((response) => {
-          const availableTimes = new Set(
-            response.data.map((element) => element.time)
-          );
-          setBookedTimes(availableTimes);
-          setTimeSlots(timeslots.filter((time) => !availableTimes.has(time)));
+          if (response.data.length > 0) {
+            const timesForSelectedDate = response.data[0].time || [];
+            const bookedTimesFromServer = new Set(timesForSelectedDate);
+
+            setBookedTimes(bookedTimesFromServer);
+            setTimeSlots(
+              timeslots.filter((time) => !bookedTimesFromServer.has(time))
+            );
+          } else {
+            setBookedTimes(new Set());
+            setTimeSlots(timeslots);
+          }
         })
         .catch((err) =>
           console.error("Errore nel caricamento degli orari:", err)
@@ -62,7 +68,6 @@ const BookingCreator = () => {
   }, [selectedDate]);
 
   const handleBooking = (time) => {
-    console.log("Selezionato:", selectedDate, time);
     axios
       .post("http://localhost:4040/availability/book", {
         date: selectedDate,
@@ -70,29 +75,29 @@ const BookingCreator = () => {
       })
       .then(() => {
         alert("Prenotazione effettuata con successo!");
-        setBookedTimes((prev) => new Set ([...prev, time]));
-        setTimeSlots((prev) => prev.filter((slot) => slot !== time))
-        console.log("Payload inviato:", { date: selectedDate, time: time });
+
+        setBookedTimes((prev) => new Set([...prev, time]));
+        setTimeSlots((prev) => prev.filter((slot) => slot !== time));
       })
       .catch((err) => console.error("Errore nella prenotazione:", err));
   };
-
-  const isDateAvailable = (date) => {
+  const isDateAndTimeAvailable = (date, time) => {
     const formattedDate = date.toISOString().split("T")[0];
-    return allDates.includes(formattedDate);
+    return allDates.some(
+      (item) => item.date === formattedDate && item.time === time
+    );
   };
-
   return (
     <div className="booking-container">
       <h1>Crea una Prenotazione</h1>
       <div className="booking-creator">
         <Calendar
           onChange={(date) => {
-            const formattedDate = date.toISOString().split("T")[0]; // aaaa-mm-gg
+            const formattedDate = date.toISOString().split("T")[0];
             setSelectedDate(formattedDate);
           }}
           tileClassName={({ date }) =>
-            isDateAvailable(date) ? "available-date" : "unavailable-date"
+            isDateAndTimeAvailable(date) ? "available-date" : "unavailable-date"
           }
         />
         {selectedDate && (
