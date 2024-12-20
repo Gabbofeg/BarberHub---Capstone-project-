@@ -1,6 +1,7 @@
 const express = require('express');
 const users = express.Router();
 const userModel = require ("../models/userModel");
+const bcrypt = require('bcrypt')
 const isAuthored = require('../middleware/isAuthored')
 const logger = require('../middleware/logger');
 const { validateUserBody } = require('../middleware/validateUser')
@@ -68,8 +69,15 @@ users.get('/users/:userId', async ( req, res ) => {
 
 
 
-users.post('/users/create', [ isAuthored, validateUserBody ] , async ( req, res ) => {
-    const newUser = new userModel( req.body );
+users.post('/users/create', async ( req, res ) => {
+
+    const salt = await bcrypt.genSalt(10)
+    const hashedPassword = await bcrypt.hash(req.body.password, salt)
+
+    const newUser = new userModel({
+        ...req.body,
+        password: hashedPassword
+    });
     try {
         const userToSave = await newUser.save();
         res.status(201).send({
@@ -77,7 +85,9 @@ users.post('/users/create', [ isAuthored, validateUserBody ] , async ( req, res 
             message: "User created successfully",
             userToSave
         })
-    } catch (e) {}
+    } catch (e) {
+        next(e)
+    }
 });
 
 
